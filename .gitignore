@@ -1,7 +1,7 @@
 Workspace/*
-/Debug
-/Src/Backup/*
-/Inc/Backup/*
+*/Debug
+*/Src/Backup/*
+*/Inc/Backup/*
 .mxproject
 
 # Prerequisites
