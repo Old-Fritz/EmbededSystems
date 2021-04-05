@@ -75,7 +75,7 @@ void CMD_GetInfo()
 	SemaphoreState info = SEM_GetState();
 	char buffer[128];
 
-	sprintf("Color: %s  ModeOnPress: %s  Red timeout: %d  Interrupts: %s",
+	sprintf(buffer, "\nColor: %s \nModeOnPress: %s \nRed timeout: %d \nInterrupts: %s \n",
 			MapColorStateToName(info.m_color), MapModeToName(info.m_mode),
 			info.m_redTimeout, MapBool(SDK_UART_IsInterruptible()));
 

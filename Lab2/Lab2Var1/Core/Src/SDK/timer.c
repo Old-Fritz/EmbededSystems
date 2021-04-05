@@ -12,28 +12,79 @@
 typedef struct Interrupt
 {
 	void (*m_callbackPtr)();
-	uint32_t m_period;
+	uint32_t m_delay;
 	uint32_t m_timer;
-
+	bool m_periodic;
 } Interrupt;
+typedef struct DataInterrupt
+{
+	void (*m_callbackPtr)(void* data);
+	void* m_data;
+	uint32_t m_delay;
+	uint32_t m_timer;
+	bool m_periodic;
+} DataInterrupt;
 
 /// STATIC ///
-static Interrupt s_interrupt;
+static Interrupt s_interrupt[SDK_TIM_INTERRUPT_MAX];
+static uint32_t s_interruptCount = 0;
 
+static DataInterrupt s_dataInterrupt[SDK_TIM_DATA_INTERRUPT_MAX];
+static uint32_t s_dataInterruptCount = 0;
 /// API ///
-void SDK_TIM_SetInterrupt(void(*callbackPtr)(), uint32_t period)
+
+void SDK_TIM_AddInterrupt(void(*callbackPtr)(), uint32_t delay, bool periodic)
 {
-	s_interrupt.m_callbackPtr = callbackPtr;
-	s_interrupt.m_period = period;
-	s_interrupt.m_timer = 0;
+	if(s_interruptCount < SDK_TIM_INTERRUPT_MAX)
+	{
+		s_interrupt[s_interruptCount].m_callbackPtr = callbackPtr;
+		s_interrupt[s_interruptCount].m_delay = delay;
+		s_interrupt[s_interruptCount].m_timer = 0;
+		s_interrupt[s_interruptCount].m_periodic = periodic;
+
+		s_interruptCount++;
+	}
+}
+void SDK_TIM_AddDataInterrupt(void(*callbackPtr)(void* data), void* data, uint32_t delay, bool periodic)
+{
+	if(s_dataInterruptCount < SDK_TIM_DATA_INTERRUPT_MAX)
+	{
+		s_dataInterrupt[s_dataInterruptCount].m_callbackPtr = callbackPtr;
+		s_dataInterrupt[s_dataInterruptCount].m_data = data;
+		s_dataInterrupt[s_dataInterruptCount].m_delay = delay;
+		s_dataInterrupt[s_dataInterruptCount].m_timer = 0;
+		s_dataInterrupt[s_dataInterruptCount].m_periodic = periodic;
+
+		s_dataInterruptCount++;
+	}
 }
 
 void SDK_TIM_Update()
 {
-	if(++s_interrupt.m_timer >= s_interrupt.m_period)
+	for(int i = 0; i < s_interruptCount; ++i)
 	{
-		s_interrupt.m_timer = 0;
-		s_interrupt.m_callbackPtr();
+		if(s_interrupt[i].m_callbackPtr && ++s_interrupt[i].m_timer >= s_interrupt[i].m_delay)
+		{
+			s_interrupt[i].m_timer = 0;
+			s_interrupt[i].m_callbackPtr();
+			if(!s_interrupt[i].m_periodic)
+			{
+				s_interrupt[i].m_callbackPtr = 0;
+			}
+		}
+	}
+
+	for(int i = 0; i < s_dataInterruptCount; ++i)
+	{
+		if(s_dataInterrupt[i].m_callbackPtr && ++s_dataInterrupt[i].m_timer >= s_dataInterrupt[i].m_delay)
+		{
+			s_dataInterrupt[i].m_timer = 0;
+			s_dataInterrupt[i].m_callbackPtr(s_dataInterrupt[i].m_data);
+			if(!s_dataInterrupt[i].m_periodic)
+			{
+				s_dataInterrupt[i].m_callbackPtr = 0;
+			}
+		}
 	}
 }
 

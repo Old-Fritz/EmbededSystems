@@ -21,6 +21,10 @@
 
 #define SDK_MAIN_LOOP_REPEATS 3
 
+// timer
+#define SDK_TIM_INTERRUPT_MAX 5
+#define SDK_TIM_DATA_INTERRUPT_MAX 15
+
 // uart
 #define SDK_UART_HANDLE huart3
 #define SDK_UART_TIMEOUT 3
@@ -73,7 +77,8 @@ bool SDK_UART_IsInterruptible();
 
 // timer API
 void SDK_TIM_Update();
-void SDK_TIM_SetInterrupt(void(*callbackPtr)(), uint32_t period);
+void SDK_TIM_AddInterrupt(void(*callbackPtr)(), uint32_t delay, bool periodic);
+void SDK_TIM_AddDataInterrupt(void(*callbackPtr)(void* data), void* data, uint32_t delay, bool periodic);
 void SDK_TIM_Delay(uint32_t delay);
 void SDK_TIM_InterruptDelay(uint32_t minDelay, uint32_t maxDelay);
 uint32_t SDK_TIM_WaitEvent(bool (*event)(), uint32_t timeout);

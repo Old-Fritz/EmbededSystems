@@ -17,6 +17,7 @@ void SDK_SYS_Init()
 	SDK_TRACE_Start();
 #endif
 	SDK_BTN_ClearState();
+	SDK_UART_Init();
 }
 void SDK_SYS_Shutdown()
 {

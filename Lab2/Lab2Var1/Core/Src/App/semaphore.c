@@ -54,7 +54,7 @@ void SEM_Cycle()
 	// green
 	SEM_Show(SDK_LED_GREEN, SEM_GREEN_PERIOD, false);
 	// blinking green
-	SEM_Blink(SDK_LED_GREEN, SEM_BLINK_COUNT, SEM_BLINK_PERIOD);
+	SEM_Blink(SDK_LED_GREEN, SEM_BLINK_PERIOD, SEM_BLINK_COUNT);
 
 	// yellow
 	SEM_Show(SDK_LED_YELLOW, SEM_YELLOW_PERIOD, false);
