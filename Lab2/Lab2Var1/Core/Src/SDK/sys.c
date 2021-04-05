@@ -5,8 +5,10 @@
  *      Author: komar
  */
 
-#include "SDK/sdk_interface.h"
+/// INCLUDES ///
+#include "SDK/interface.h"
 
+///  API  ///
 // system API
 void SDK_SYS_Init()
 {
@@ -22,10 +24,10 @@ void SDK_SYS_Shutdown()
 	SDK_TRACE_Stop();
 #endif
 }
-
-void SDK_SYS_Delay(uint32_t delay)
+void SDK_SYS_Tick()
 {
-	HAL_Delay(delay);
+	SDK_BTN_Update();
+	SDK_TIM_Update();
 }
 
 // led API

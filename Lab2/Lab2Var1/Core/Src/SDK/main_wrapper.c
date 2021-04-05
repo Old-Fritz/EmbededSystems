@@ -5,14 +5,15 @@
  *      Author: komar
  */
 
+/// INCLUDES ///
+#include "SDK/interface.h"
 
-#include "SDK/sdk_interface.h"
-
-
+///  API  ///
 void SDK_MAIN_Wrapper()
 {
 	SDK_SYS_Init();
 
+	// must be overriden by app
 	SDK_MAIN_PreLoop();
 	SDK_MAIN_Loop();
 	SDK_MAIN_PostLoop();

@@ -5,13 +5,14 @@
  *      Author: komar
  */
 
+/// INCLUDES ///
 #include "App/commands.h"
-#include "SDK/sdk_interface.h"
 #include "App/semaphore.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
 
+/// STATIC ///
 static char* MapColorStateToName(eColorState color)
 {
 	switch(color)
@@ -46,18 +47,8 @@ static char* MapBool(bool value)
 	}
 	return "false";
 }
-static void CMD_GetInfo()
-{
-	SemaphoreState info = SEM_GetState();
-	char buffer[128];
 
-	sprintf("Color: %s  ModeOnPress: %s  Red timeout: %d  Interrupts: %s",
-			MapColorStateToName(info.m_color), MapModeToName(info.m_mode),
-			info.m_redTimeout, MapBool(SDK_UART_IsInterrupts()));
-
-	SDK_UART_Transmit((uint8_t*)buffer, strlen(buffer));
-}
-
+/// API ///
 void CMD_ProcessCommand(const char* command)
 {
 	CmdData data = CMD_ParseComand(command);
@@ -79,8 +70,19 @@ void CMD_ProcessCommand(const char* command)
 		break;
 	}
 }
+void CMD_GetInfo()
+{
+	SemaphoreState info = SEM_GetState();
+	char buffer[128];
 
+	sprintf("Color: %s  ModeOnPress: %s  Red timeout: %d  Interrupts: %s",
+			MapColorStateToName(info.m_color), MapModeToName(info.m_mode),
+			info.m_redTimeout, MapBool(SDK_UART_IsInterruptible()));
 
+	SDK_UART_Transmit((uint8_t*)buffer, strlen(buffer));
+}
+
+// parsing
 CmdData CMD_ParseComand(const char* command)
 {
 	CmdData data;
@@ -89,6 +91,8 @@ CmdData CMD_ParseComand(const char* command)
 
 	size_t strSize = strlen(command);
 	uint32_t commandStart = 0;
+
+	// find first non-space symbol
 	while (commandStart < strSize && isspace((int)command[commandStart]))
 	{
 		commandStart++;
@@ -100,6 +104,7 @@ CmdData CMD_ParseComand(const char* command)
 	command = command + commandStart;
 	strSize -= commandStart;
 
+	// try parse as different commands
 	if (CMD_ParseGetInfo(command, strSize, &data))
 	{
 		return data;
@@ -115,8 +120,7 @@ CmdData CMD_ParseComand(const char* command)
 bool CMD_ParseGetInfo(const char* command, int strSize, CmdData* data)
 {
 	char* pCh = strstr(command, "?");
-	if (command &&
-		pCh == command &&
+	if (command && pCh == command &&
 		(strSize == 1 || isspace((int)command[1])))
 	{
 		data->m_type = ECT_GetInfo;
@@ -129,10 +133,8 @@ bool CMD_ParseGetInfo(const char* command, int strSize, CmdData* data)
 bool CMD_ParseSet(const char* command, int strSize, CmdData* data)
 {
 	char* pCh = strstr(command, "set");
-	if (command &&
-		pCh == command &&
-		strSize > 3 &&
-		isspace((int)command[3]))
+	if (command && pCh == command &&
+		strSize > 3 && isspace((int)command[3]))
 	{
 		uint32_t commandStart = 3;
 		while (commandStart < strSize && isspace((int)command[commandStart]))

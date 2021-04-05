@@ -23,7 +23,7 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "SDK/sdk_interface.h"
+#include "SDK/interface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -187,8 +187,7 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-  SDK_BTN_Update();
-  SDK_TIM_Inc();
+  SDK_SYS_Tick();
   /* USER CODE END SysTick_IRQn 1 */
 }
 
