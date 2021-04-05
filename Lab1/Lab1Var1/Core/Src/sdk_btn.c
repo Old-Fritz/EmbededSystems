@@ -33,23 +33,16 @@ void SDK_BTN_Update()
 bool SDK_BTN_IsPressed()
 {
 	bool status = s_btnState.m_pressed;
-	SDK_BTN_Update();
 
 	return status;
 }
 bool SDK_BTN_IsUp()
 {
-	bool status = s_btnState.m_up;
-	SDK_BTN_Update();
-
-	return status;
+	return s_btnState.m_up;
 }
 bool SDK_BTN_IsDown()
 {
-	bool status = s_btnState.m_down;
-	SDK_BTN_Update();
-
-	return status;
+	return s_btnState.m_down;
 }
 void SDK_BTN_SetDown()
 {
@@ -69,7 +62,7 @@ uint32_t SDK_BTN_WaitDown(uint32_t timeout)
 
 	while( passed < wait)
 	{
-		if(SDK_BTN_IsDown())
+		if(SDK_BTN_IsDown() )
 		{
 			return passed;
 		}

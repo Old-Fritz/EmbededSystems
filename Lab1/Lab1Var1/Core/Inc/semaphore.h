@@ -9,11 +9,12 @@
 #ifndef INC_SEMAPHORE_H_
 #define INC_SEMAPHORE_H_
 
-#define SEM_BLINK_COUNT 3
+#define SEM_BLINK_COUNT 2
 #define SEM_BLINK_PERIOD 50
-#define SEM_GREEN_PERIOD 250
-#define SEM_YELLOW_PERIOD 100
-#define SEM_RED_PERIOD 500
+#define SEM_GREEN_PERIOD 200
+#define SEM_YELLOW_PERIOD 50
+#define SEM_RED_PERIOD 650
+#define SEM_BTN_PERIOD 510
 
 void SEM_Blink(uint16_t color, uint32_t count, uint32_t delay);
 void SEM_Interrupt(uint32_t minDelay, uint32_t maxDelay);

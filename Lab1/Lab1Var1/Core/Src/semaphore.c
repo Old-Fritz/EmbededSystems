@@ -59,6 +59,7 @@ void SEM_AutoMode()
 
 void SDK_MAIN_preLoop()
 {
+	SDK_TIM_SetInterrupt(&SDK_BTN_SetDown, SEM_BTN_PERIOD);
 	s_currentColor = SDK_LED_RED;
 }
 void SDK_MAIN_loopFunc()

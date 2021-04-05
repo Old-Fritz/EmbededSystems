@@ -14,7 +14,7 @@
 // define 0 if local launch
 #define SDK_REMOTE_MODE 1
 
-#define SDK_MAIN_LOOP_REPEATS 2
+#define SDK_MAIN_LOOP_REPEATS 3
 
 // Button input
 #define SDK_BTN_GPIO GPIOC
@@ -50,6 +50,10 @@ void SDK_SYS_Init();
 void SDK_SYS_Shutdown();
 
 void SDK_SYS_Delay(uint32_t delay);
+
+// timer
+void SDK_TIM_SetInterrupt(void(*callbackPtr)(), uint32_t period);
+void SDK_TIM_Inc();
 
 // button API
 void SDK_BTN_ClearState();
