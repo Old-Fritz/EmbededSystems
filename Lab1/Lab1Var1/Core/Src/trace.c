@@ -1,6 +1,5 @@
 #include "trace.h"
 #include <stdio.h>
-#include <stdarg.h>
 
 traceinfo_t * TI = (traceinfo_t *)TRACEINFO_ADDR;
 tracelog_t * TL = (tracelog_t *)TRACELOG_ADDR;
@@ -67,12 +66,8 @@ void SDK_TRACE_Timestamp(uint8_t id, uint8_t value)
  * Writes the C string pointed by format to the trace buffer
  *-----------------------------------------------------------------------
  */
-void SDK_TRACE_Print(char * format, ...)
+void SDK_TRACE_VPrint(char * format, va_list args)
 {
-
-	va_list args;
-	va_start(args, format);
-
 	vsprintf( __buf, format, args);
 
 	uint8_t len = strlen(__buf);
@@ -88,6 +83,14 @@ void SDK_TRACE_Print(char * format, ...)
 		*(__IO uint8_t *)(Print_Write_Address+TI->printlog_size) = __buf[i];
 		TI->printlog_size++;
 	}
+}
+void SDK_TRACE_Print(char * format, ...)
+{
+
+	va_list args;
+	va_start(args, format);
+
+	SDK_TRACE_VPrint(format, args);
 }
 /**
  * ----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 
-Lab1Var1.elf:     file format elf32-littlearm
+Template.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn

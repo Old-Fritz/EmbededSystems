@@ -11,6 +11,7 @@
 #include "main.h"
 #include "crc32.h"
 #include <string.h>
+#include <stdarg.h>
 
 #define CLK_Prescaler		1000000
 
@@ -64,6 +65,7 @@ void MX_TRACE_Init(void);
 void SDK_TRACE_Start(void);
 void SDK_TRACE_Stop(void);
 void SDK_TRACE_Timestamp(uint8_t id, uint8_t value);
+void SDK_TRACE_VPrint(char * format, va_list args);
 void SDK_TRACE_Print(char * format, ...);
 void SDK_TRACE_Dump(uint32_t addr, uint16_t size);
 

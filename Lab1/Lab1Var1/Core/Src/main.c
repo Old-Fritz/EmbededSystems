@@ -90,18 +90,13 @@ int main(void)
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 
-  SDK_Init();
-  SDK_Print("%s","Semaphore simulation");
-
-  SEM_AutoMode();
-
-  SDK_Shutdown();
+  SDK_MAIN_wrapper();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
+  //while (1)
   {
     /* USER CODE END WHILE */
 
