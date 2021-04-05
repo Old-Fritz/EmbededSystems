@@ -1,4 +1,4 @@
-#include "trace.h"
+#include "SDK/trace.h"
 #include <stdio.h>
 
 traceinfo_t * TI = (traceinfo_t *)TRACEINFO_ADDR;

@@ -6,7 +6,7 @@
  */
 
 
-#include "sdk_interface.h"
+#include "SDK/sdk_interface.h"
 
 typedef struct Interrupt
 {

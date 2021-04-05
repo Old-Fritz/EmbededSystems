@@ -16,6 +16,32 @@
 #define SEM_RED_PERIOD 650
 #define SEM_BTN_PERIOD 510
 
+typedef enum eColorState
+{
+	ECS_Green,
+	ECS_Yellow,
+	ECS_Red,
+	ECS_BlinkingGreen
+} eColorState;
+
+typedef enum eSemaphoreMode
+{
+	ESM_ProcessPress = 1,
+	ESM_IgnorePress = 2
+} eSemaphoreMode;
+
+typedef struct SemaphoreState
+{
+	eColorState m_color;
+	eSemaphoreMode m_mode;
+	uint32_t m_redTimeout;
+} SemaphoreState;
+
+SemaphoreState SEM_GetState();
+void SEM_SetMode(eSemaphoreMode mode);
+void SEM_SetRedTimeout(uint32_t timeout);
+
+void SEM_Init();
 void SEM_Blink(uint16_t color, uint32_t count, uint32_t delay);
 void SEM_Interrupt(uint32_t minDelay, uint32_t maxDelay);
 void SEM_Show(uint16_t color);

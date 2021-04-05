@@ -1,4 +1,4 @@
-#include <crc32.h>
+#include <SDK/crc32.h>
 
 const unsigned long crc32_table[256]={
     0x00000000UL, 0x77073096UL, 0xEE0E612CUL, 0x990951BAUL, 

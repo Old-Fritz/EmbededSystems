@@ -1,6 +1,6 @@
 #include "trace.h"
-#include <stdbool.h>
 
+#include <stdbool.h>
 /*
  * sdk_interface.h
  *
@@ -37,19 +37,31 @@
 #define SDK_LED_YELLOW_PIN GPIO_PIN_14
 #define SDK_LED_RED_PIN GPIO_PIN_15
 
-// main cycle wrapper
-void SDK_MAIN_wrapper();
-void SDK_MAIN_loop();
+// uart
+#define SDK_UART_HANDLE huart4
+#define SDK_UART_TIMEOUT 3
+#define SDK_UART_BUFFER_SIZE 128
 
-void SDK_MAIN_preLoop();
-void SDK_MAIN_postLoop();
-void SDK_MAIN_loopFunc();
+// main cycle wrapper
+void SDK_MAIN_Wrapper();
+void SDK_MAIN_Loop();
+
+void SDK_MAIN_PreLoop();
+void SDK_MAIN_PostLoop();
+void SDK_MAIN_LoopFunc();
 
 // system API
 void SDK_SYS_Init();
 void SDK_SYS_Shutdown();
 
 void SDK_SYS_Delay(uint32_t delay);
+
+// uart API
+void SDK_UART_Init();
+void SDK_UART_EnableInterrupts(bool interrupts);
+bool SDK_UART_IsInterrupts();
+void SDK_UART_Transmit(uint8_t* pData, size_t size);
+void SDK_UART_Receive(uint8_t* pData, size_t size, size_t offset);
 
 // timer
 void SDK_TIM_SetInterrupt(void(*callbackPtr)(), uint32_t period);

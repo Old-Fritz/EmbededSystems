@@ -5,7 +5,7 @@
  *      Author: komar
  */
 
-#include "sdk_interface.h"
+#include "SDK/sdk_interface.h"
 
 // system API
 void SDK_SYS_Init()

@@ -25,8 +25,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "sdk_interface.h"
-#include "semaphore.h"
+#include "SDK/sdk_interface.h"
+#include "App/semaphore.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,7 +93,7 @@ int main(void)
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  SDK_MAIN_wrapper();
+  SDK_MAIN_Wrapper();
 
   /* USER CODE END 2 */
 
