@@ -19,7 +19,16 @@
 // define 0 if local launch
 #define SDK_REMOTE_MODE 1
 
-#define SDK_MAIN_LOOP_REPEATS 3
+#define SDK_MAIN_LOOP_REPEATS 2
+
+// interruptions
+#define SDK_INT_HANDLE_APP htim1
+#define SDK_INT_HANDLE_PRIORITY htim3
+#define SDK_INT_TYPE_APP TIM1
+#define SDK_INT_TYPE_PROIORITY TIM3
+#define SDK_INT_FREQ_MS_PRIORITY 10
+
+#define SDK_INT P1
 
 // timer
 #define SDK_TIM_INTERRUPT_MAX 5
@@ -64,6 +73,11 @@ void SDK_MAIN_LoopFunc();
 void SDK_MAIN_ProcessCommand(const char* command);
 
 // interrupts API
+void SDK_INT_Init();
+void SDK_INT_AppCallback();
+void SDK_INT_PriorityCallback();
+void SDK_INT_Delay(uint32_t delay);
+uint32_t SDK_INT_GetTicks();
 
 // system API
 void SDK_SYS_Init();
@@ -97,6 +111,7 @@ bool SDK_BTN_IsDown();
 // led API
 void SDK_LED_Set(uint16_t led, GPIO_PinState state);
 void SDK_LED_Toggle(uint16_t led);
+GPIO_PinState SDK_LED_Read(uint16_t led);
 
 // debug API
 void SDK_DBG_Print(char * format, ...);

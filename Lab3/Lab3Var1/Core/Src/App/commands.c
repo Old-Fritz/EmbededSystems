@@ -77,7 +77,7 @@ void CMD_GetInfo()
 
 	sprintf(buffer, "\nColor: %s \nModeOnPress: %s \nRed timeout: %d \nInterrupts: %s \n",
 			MapColorStateToName(info.m_color), MapModeToName(info.m_mode),
-			info.m_redTimeout, MapBool(SDK_UART_IsInterruptible()));
+			(int)info.m_redTimeout, MapBool(SDK_UART_IsInterruptible()));
 
 	SDK_UART_Transmit((uint8_t*)buffer, strlen(buffer));
 }

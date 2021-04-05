@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "iwdg.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -82,7 +83,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_2);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -90,6 +91,8 @@ int main(void)
   MX_IWDG_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
+  MX_TIM1_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
   SDK_MAIN_Wrapper();

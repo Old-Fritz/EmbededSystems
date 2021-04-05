@@ -5,26 +5,16 @@
  *      Author: komar
  */
 /// INCLUDES ///
+#include "SDK/interface.h"
 #include "App/semaphore.h"
 #include "App/commands.h"
 
 ///  API  ///
 void SDK_MAIN_PreLoop()
 {
-	SDK_DBG_Print("%s", "Begin simulation");
-	// init semaphore
+	// Init semaphore
 	SEM_Init();
 
-#if SDK_REMOTE_MODE
-	// simulate button press
-	SDK_TIM_AddInterrupt(&SDK_BTN_SetDown, SEM_BTN_PERIOD, true);
-
-	// simulate command input
-	SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "set interrupts 0", 100,  false);
-	SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "set timeout 100", 100,  false);
-	SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "set mode 2", 700,  false);
-	SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "?", 1000, false);
-#endif
 }
 void SDK_MAIN_LoopFunc()
 {
@@ -41,4 +31,22 @@ void SDK_MAIN_PostLoop()
 void SDK_MAIN_ProcessCommand(const char* command)
 {
 	CMD_ProcessCommand(command);
+}
+
+int counter = 0;
+void SDK_INT_AppCallback()
+{
+	GPIO_PinState stateGreen = SDK_LED_Read(SDK_LED_GREEN);
+	GPIO_PinState stateYellow = SDK_LED_Read(SDK_LED_YELLOW);
+	GPIO_PinState stateRed = SDK_LED_Read(SDK_LED_RED);
+
+	SDK_LED_Set(SDK_LED_GREEN, SDK_LED_ON);
+	SDK_LED_Set(SDK_LED_YELLOW, SDK_LED_OFF);
+	SDK_LED_Set(SDK_LED_RED, SDK_LED_ON);
+
+	SDK_INT_Delay(2000);
+
+	SDK_LED_Set(SDK_LED_GREEN, stateGreen);
+	SDK_LED_Set(SDK_LED_YELLOW, stateYellow);
+	SDK_LED_Set(SDK_LED_RED, stateRed);
 }

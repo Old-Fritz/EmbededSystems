@@ -18,6 +18,7 @@ void SDK_SYS_Init()
 #endif
 	SDK_BTN_ClearState();
 	SDK_UART_Init();
+	SDK_INT_Init();
 }
 void SDK_SYS_Shutdown()
 {
@@ -64,6 +65,11 @@ void SDK_LED_Toggle(uint16_t led)
 	SDK_TRACE_Timestamp(led, HAL_GPIO_ReadPin(SDK_LED_GPIO, pin));
 #endif
 }
+GPIO_PinState SDK_LED_Read(uint16_t led)
+{
+	return  HAL_GPIO_ReadPin(SDK_LED_GPIO, LED_MapLedToPin(led));
+}
+
 
 // debug API
 void SDK_DBG_Print(char * format, ...)
