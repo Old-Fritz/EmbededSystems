@@ -23,11 +23,10 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
-#include "SDK/interface.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "SDK/interface.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,20 +101,11 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* creation of blink01 */
-	const osThreadAttr_t blink01_attributes = {
-		.name = "blink01",
-		.priority = (osPriority_t) osPriorityNormal,
-		.stack_size = 128
-	};
-	blink01Handle = osThreadNew(StartBlink01, NULL, &blink01_attributes);
+  blink01Handle = osThreadNew(StartBlink01, NULL, &blink01_attributes);
 
   /* creation of blink02 */
-	const osThreadAttr_t blink02_attributes = {
-			  .name = "blink02",
-		.priority = (osPriority_t) osPriorityBelowNormal,
-		.stack_size = 128
-	};
-	blink02Handle = osThreadNew(StartBlink02, NULL, &blink02_attributes);
+  blink02Handle = osThreadNew(StartBlink02, NULL, &blink02_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -139,6 +129,7 @@ void StartBlink01(void *argument)
   /* Infinite loop */
 	for(;;)
 	{
+		//SEM_Cycle();
 		SDK_LED_Toggle(SDK_LED_GREEN);
 		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		osDelay(500);
@@ -162,7 +153,8 @@ void StartBlink02(void *argument)
   /* Infinite loop */
 	for(;;)
 	{
-		SDK_LED_Toggle(SDK_LED_GREEN);
+		//SEM_Cycle();
+		SDK_LED_Toggle(SDK_LED_RED);
 		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		osDelay(600);
 	}

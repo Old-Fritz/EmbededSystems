@@ -19,30 +19,8 @@
 // define 0 if local launch
 #define SDK_REMOTE_MODE 1
 
-#define SDK_MAIN_LOOP_REPEATS 1
-
-// interruptions
-#define SDK_INT_HANDLE_APP htim1
-#define SDK_INT_HANDLE_PRIORITY htim3
-#define SDK_INT_TYPE_APP TIM1
-#define SDK_INT_TYPE_PROIORITY TIM3
-#define SDK_INT_FREQ_MS_PRIORITY 10
-
-#define SDK_INT P1
-
 // timer
 #define SDK_TIM_INTERRUPT_MAX 5
-#define SDK_TIM_DATA_INTERRUPT_MAX 15
-
-// uart
-#define SDK_UART_HANDLE huart3
-#define SDK_UART_TIMEOUT 3
-#define SDK_UART_BUFFER_SIZE 128
-
-// Button input
-#define SDK_BTN_GPIO GPIOC
-#define SDK_BTN P0
-#define SDK_BTN_PIN GPIO_PIN_15
 
 // LED output
 #define SDK_LED_GPIO GPIOD
@@ -65,48 +43,15 @@
 
 // main cycle wrapper
 void SDK_MAIN_Wrapper();
-void SDK_MAIN_Loop();
-
-void SDK_MAIN_PreLoop();
-void SDK_MAIN_PostLoop();
-void SDK_MAIN_LoopFunc();
-void SDK_MAIN_ProcessCommand(const char* command);
-
-// interrupts API
-void SDK_INT_Init();
-void SDK_INT_AppCallback();
-void SDK_INT_PriorityCallback();
-void SDK_INT_Delay(uint32_t delay);
-uint32_t SDK_INT_GetTicks();
 
 // system API
 void SDK_SYS_Init();
 void SDK_SYS_Shutdown();
 void SDK_SYS_Tick(); // process every ms
 
-// uart API
-void SDK_UART_Init();
-void SDK_UART_EnableInterrupts(bool interrupts);
-void SDK_UART_Transmit(uint8_t* pData, size_t size);
-void SDK_UART_Receive(uint8_t* pData, size_t size, size_t offset);
-bool SDK_UART_IsInterruptible();
-
 // timer API
 void SDK_TIM_Update();
 void SDK_TIM_AddInterrupt(void(*callbackPtr)(), uint32_t delay, bool periodic);
-void SDK_TIM_AddDataInterrupt(void(*callbackPtr)(void* data), void* data, uint32_t delay, bool periodic);
-void SDK_TIM_Delay(uint32_t delay);
-void SDK_TIM_InterruptDelay(uint32_t minDelay, uint32_t maxDelay);
-uint32_t SDK_TIM_WaitEvent(bool (*event)(), uint32_t timeout);
-
-// button API
-void SDK_BTN_ClearState();
-void SDK_BTN_Update();
-void SDK_BTN_SetDown();
-
-bool SDK_BTN_IsPressed();
-bool SDK_BTN_IsUp();
-bool SDK_BTN_IsDown();
 
 // led API
 void SDK_LED_Set(uint16_t led, GPIO_PinState state);

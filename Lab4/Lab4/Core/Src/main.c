@@ -21,8 +21,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "iwdg.h"
-#include "tim.h"
-#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -45,10 +43,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-UART_HandleTypeDef huart2;
 
-osThreadId_t blink01Handle;
-osThreadId_t blink02Handle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -56,8 +51,6 @@ osThreadId_t blink02Handle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
-void StartBlink01(void *argument);
-void StartBlink02(void *argument);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -96,10 +89,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_IWDG_Init();
-  MX_USART2_UART_Init();
-  MX_USART3_UART_Init();
-  MX_TIM1_Init();
-  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
   osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
@@ -111,7 +100,6 @@ int main(void)
   /* USER CODE END 2 */
 
   /* Init scheduler */
-
   /* Start scheduler */
   //osKernelStart();
 
@@ -183,7 +171,19 @@ void SystemClock_Config(void)
   * @param  htim : TIM handle
   * @retval None
   */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
 
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM6) {
+    HAL_IncTick();
+    SDK_SYS_Tick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

@@ -1,4 +1,5 @@
 Workspace/*
+WorkspaceRTOS/*
 */Debug
 */Src/Backup/*
 */Inc/Backup/*

@@ -15,10 +15,9 @@ void SDK_SYS_Init()
 #if SDK_REMOTE_MODE
 	MX_TRACE_Init();
 	SDK_TRACE_Start();
+	SDK_TIM_AddInterrupt(&SDK_SYS_Shutdown, 7000, false);
 #endif
-	SDK_BTN_ClearState();
-	SDK_UART_Init();
-	//SDK_INT_Init();
+	osKernelStart();
 }
 void SDK_SYS_Shutdown()
 {
@@ -28,7 +27,6 @@ void SDK_SYS_Shutdown()
 }
 void SDK_SYS_Tick()
 {
-	SDK_BTN_Update();
 	SDK_TIM_Update();
 }
 
