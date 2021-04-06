@@ -62,6 +62,13 @@ const osThreadAttr_t blink02_attributes = {
   .priority = (osPriority_t) osPriorityBelowNormal,
   .stack_size = 128 * 4
 };
+/* Definitions for blink03 */
+osThreadId_t blink03Handle;
+const osThreadAttr_t blink03_attributes = {
+  .name = "blink03",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 128 * 4
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -70,6 +77,7 @@ const osThreadAttr_t blink02_attributes = {
 
 void StartBlink01(void *argument);
 void StartBlink02(void *argument);
+void StartBlink03(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -106,6 +114,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of blink02 */
   blink02Handle = osThreadNew(StartBlink02, NULL, &blink02_attributes);
 
+  /* creation of blink03 */
+  blink03Handle = osThreadNew(StartBlink03, NULL, &blink03_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -129,10 +140,8 @@ void StartBlink01(void *argument)
   /* Infinite loop */
 	for(;;)
 	{
-		//SEM_Cycle();
 		SDK_LED_Toggle(SDK_LED_GREEN);
-		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-		osDelay(500);
+		osDelay(700);
 	}
 
 	// In case we accidentally exit from task loop
@@ -153,10 +162,8 @@ void StartBlink02(void *argument)
   /* Infinite loop */
 	for(;;)
 	{
-		//SEM_Cycle();
-		SDK_LED_Toggle(SDK_LED_RED);
-		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-		osDelay(600);
+		SDK_LED_Toggle(SDK_LED_YELLOW);
+		osDelay(900);
 	}
 
 	// In case we accidentally exit from task loop
@@ -164,6 +171,30 @@ void StartBlink02(void *argument)
 
   /* USER CODE END StartBlink02 */
 }
+
+/* USER CODE BEGIN Header_StartBlink03 */
+/**
+* @brief Function implementing the blink03 thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartBlink03 */
+void StartBlink03(void *argument)
+{
+  /* USER CODE BEGIN StartBlink03 */
+  /* Infinite loop */
+	for(;;)
+	{
+		SDK_LED_Toggle(SDK_LED_RED);
+		osDelay(1200);
+	}
+
+	// In case we accidentally exit from task loop
+	osThreadTerminate(NULL);
+
+  /* USER CODE END StartBlink03 */
+}
+
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
