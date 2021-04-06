@@ -31,8 +31,8 @@ static uint32_t s_interruptCount = 0;
 
 static DataInterrupt s_dataInterrupt[SDK_TIM_DATA_INTERRUPT_MAX];
 static uint32_t s_dataInterruptCount = 0;
-/// API ///
 
+/// API ///
 void SDK_TIM_AddInterrupt(void(*callbackPtr)(), uint32_t delay, bool periodic)
 {
 	if(s_interruptCount < SDK_TIM_INTERRUPT_MAX)

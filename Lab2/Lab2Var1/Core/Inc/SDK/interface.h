@@ -19,7 +19,7 @@
 // define 0 if local launch
 #define SDK_REMOTE_MODE 1
 
-#define SDK_MAIN_LOOP_REPEATS 3
+#define SDK_MAIN_LOOP_REPEATS 2
 
 // timer
 #define SDK_TIM_INTERRUPT_MAX 5

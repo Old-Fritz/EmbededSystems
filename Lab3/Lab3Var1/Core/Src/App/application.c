@@ -33,7 +33,6 @@ void SDK_MAIN_ProcessCommand(const char* command)
 	CMD_ProcessCommand(command);
 }
 
-int counter = 0;
 void SDK_INT_AppCallback()
 {
 	GPIO_PinState stateGreen = SDK_LED_Read(SDK_LED_GREEN);

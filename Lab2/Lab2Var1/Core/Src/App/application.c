@@ -11,7 +11,6 @@
 ///  API  ///
 void SDK_MAIN_PreLoop()
 {
-	SDK_DBG_Print("%s", "Begin simulation");
 	// init semaphore
 	SEM_Init();
 
@@ -24,6 +23,8 @@ void SDK_MAIN_PreLoop()
 	SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "set timeout 100", 100,  false);
 	SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "set mode 2", 700,  false);
 	SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "?", 1000, false);
+	//SDK_TIM_AddDataInterrupt(&SDK_MAIN_ProcessCommand, "?", 250, false);
+
 #endif
 }
 void SDK_MAIN_LoopFunc()
