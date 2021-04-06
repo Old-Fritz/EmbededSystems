@@ -5,22 +5,23 @@
  *      Author: komar
  */
 
+/// INCLUDES ///
+#include "SDK/interface.h"
 
-#include "sdk_interface.h"
-
-
-void SDK_MAIN_wrapper()
+///  API  ///
+void SDK_MAIN_Wrapper()
 {
 	SDK_SYS_Init();
 
-	SDK_MAIN_preLoop();
-	SDK_MAIN_loop();
-	SDK_MAIN_postLoop();
+	// must be overriden by app
+	SDK_MAIN_PreLoop();
+	SDK_MAIN_Loop();
+	SDK_MAIN_PostLoop();
 
 	SDK_SYS_Shutdown();
 }
 
-void SDK_MAIN_loop()
+void SDK_MAIN_Loop()
 {
 #if !SDK_REMOTE_MODE
 	while(true)
@@ -28,6 +29,6 @@ void SDK_MAIN_loop()
 	for(int i = 0; i < SDK_MAIN_LOOP_REPEATS; i++)
 #endif
 	{
-		SDK_MAIN_loopFunc();
+		SDK_MAIN_LoopFunc();
 	}
 }

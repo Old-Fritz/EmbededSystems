@@ -1,5 +1,14 @@
-#include "sdk_interface.h"
+/*
+ * sdk_interface.h
+ *
+ *  Created on: 5 апр. 2021 г.
+ *      Author: komar
+ */
 
+/// INCLUDES ///
+#include "SDK/interface.h"
+
+/// TYPES ///
 typedef struct BtnState
 {
 	bool m_pressed;
@@ -7,8 +16,10 @@ typedef struct BtnState
 	bool m_up;
 } BtnState;
 
+/// STATIC ///
 static BtnState s_btnState;
 
+///  API  ///
 void SDK_BTN_ClearState()
 {
 	s_btnState.m_pressed = false;
@@ -17,7 +28,6 @@ void SDK_BTN_ClearState()
 }
 void SDK_BTN_Update()
 {
-	// TODO: prevent mush
 	bool btn = HAL_GPIO_ReadPin(SDK_BTN_GPIO, SDK_BTN_PIN) == GPIO_PIN_RESET;
 	s_btnState.m_up = s_btnState.m_pressed && !btn;
 	s_btnState.m_down = !s_btnState.m_pressed && btn;
@@ -32,9 +42,7 @@ void SDK_BTN_Update()
 }
 bool SDK_BTN_IsPressed()
 {
-	bool status = s_btnState.m_pressed;
-
-	return status;
+	return s_btnState.m_pressed;
 }
 bool SDK_BTN_IsUp()
 {
@@ -53,21 +61,4 @@ void SDK_BTN_SetDown()
 #if SDK_REMOTE_MODE
 	SDK_TRACE_Timestamp(SDK_BTN, true);
 #endif
-}
-uint32_t SDK_BTN_WaitDown(uint32_t timeout)
-{
-	uint32_t tickstart = HAL_GetTick();
-	uint32_t wait = timeout + 1;
-	uint32_t passed = 1;
-
-	while( passed < wait)
-	{
-		if(SDK_BTN_IsDown() )
-		{
-			return passed;
-		}
-		passed = HAL_GetTick() - tickstart;
-	}
-
-	return 0;
 }
